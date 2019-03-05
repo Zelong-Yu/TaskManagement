@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utilities.ConsoleUI;
 
 namespace TaskManagement
 {
@@ -23,8 +24,7 @@ namespace TaskManagement
             taskList.Add(task3);
             taskList.CrossOut(1);
             taskList.ReEnter(2);
-            int selectedClass = ConsoleHelper.MultipleChoice(true, "Warrior", "Bard", "Mage", "Archer",
-    "Thief", "Assassin", "Cleric", "Paladin", "etc.");
+
 
             do
             {
@@ -100,7 +100,7 @@ namespace TaskManagement
 
 
 
-    class TaskList
+    class TaskList : List<Task>
     {
         public int NumberOfTasks;
         private List<Task> taskList;
