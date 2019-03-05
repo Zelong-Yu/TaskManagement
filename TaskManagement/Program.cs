@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,34 +13,52 @@ namespace TaskManagement
         static void Main(string[] args)
         {
             bool quit = false;
-            var input = Console.ReadLine();
-            var task1 = new Task(input);
-            task1.CrossOut();
-            var task2 = task1.ReEnter();
-            var input2 = Console.ReadLine();
-            var task3 = new Task(input2);
             var taskList = new TaskList();
-            taskList.Add(task1);
-            taskList.Add(task2);
-            taskList.Add(task3);
-            taskList.CrossOut(1);
-            taskList.ReEnter(2);
+            /*var input = Console.ReadLine();
+             var task1 = new Task(input);
+             task1.CrossOut();
+            var task2 = task1.ReEnter();
+             var input2 = Console.ReadLine();
+             var task3 = new Task(input2);
 
+             taskList.Add(task1);
+             taskList.Add(task2);
+             taskList.Add(task3);
+             taskList.CrossOut(1);
+             taskList.ReEnter(2);
+            Console.WriteLine(task1.ToString());
+            Console.WriteLine(taskList.taskList[0].ToString());
+            foreach (Task task in taskList.taskList)
+              { Console.WriteLine(task.ToString()); }*/
 
+            
             do
             {
                 Console.Clear();
                 taskList.Display();
-                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 Do a task\n\t0 Quit\n\tChoice: ", 0, 2))
+                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t4 Write to file\n\t5 Read From file\n\t6 Split List0 Quit\nChoice: ", 0, 6))
                 {
                     case 1:
-                        taskList.Add(Console.ReadLine());
-                        taskList.Display();
+                        taskList.Add(PromptForInput("Type new task and enter: "));
                         break;
                     case 2:
                         taskList.DisplayWithIndex();
-                        int taskIndex = AcceptValidInt("Select which task to do : ", 0, taskList.NumberOfTasks);
+                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, taskList.NumberTasks());
                         taskList.DoTask(taskIndex);
+                        break;
+                    case 3:
+                        taskList.DisplayWithIndex();
+                        int taskIndex3 = AcceptValidInt("Select which task to Complete : ", 0, taskList.NumberTasks());
+                        taskList.DoTask(taskIndex3,false);
+                        break;
+                    case 4:
+                        taskList.WriteToFile();
+                        break;
+                    case 5:
+                        taskList.ReadFromFile();
+                        break;
+                    case 6:
+                        taskList = taskList.SplitList(taskList,10);
                         break;
                     default:
                         quit = true;
@@ -49,12 +68,18 @@ namespace TaskManagement
                 if (!quit)
                 {
                     
-                    taskList.Display();
+
                 }
             } while (!quit);
 
         }
 
+        private static string PromptForInput(string prompt)
+        {
+            Console.Write(prompt);
+
+            return Console.ReadLine();
+        }
 
         private static int AcceptValidInt(string prompt,
                                           int minValue = int.MinValue,
@@ -100,105 +125,9 @@ namespace TaskManagement
 
 
 
-    class TaskList : List<Task>
-    {
-        public int NumberOfTasks;
-        private List<Task> taskList;
-        public TaskList()
-        {
-            NumberOfTasks = 0;
-            taskList = new List<Task>();
-        }
-        public TaskList(List<Task> readList)
-        {
-            taskList = readList;
-            NumberOfTasks = taskList.Count;
-        }
-        public void Add(Task newTask)
-        {
-            taskList.Add(newTask);
-            NumberOfTasks++;
-        }
-        public void Add(string newTask)
-        {
-            taskList.Add(new Task(newTask));
-            NumberOfTasks++;
-        }
-        public void Display()
-        {
-            foreach (var item in taskList)
-            {
-                item.Display();
-            }
-        }
-        public void DisplayWithIndex()
-        {
-            int i = 0;
-            foreach (var item in taskList)
-            {
-                Console.Write($"{i}. ");
-                item.Display();
-                i++;
-            }
-        }
-        public void CrossOut(int n)
-        {
-            taskList[n].CrossOut();
-        }
-        public void ReEnter(int n)
-        {
-            taskList.Add(taskList[n].ReEnter());
-        }
-        public void DoTask(int n, bool isReenter = true)
-        {
-            this.CrossOut(n);
-            if (isReenter)
-            {
-                this.ReEnter(n);
-            }
-        }
-    }
+    
 
-    class Task
-    {
-        private string Description;
-        private bool isCrossedOut;
-        public Task()
-        {
-            Description = "";
-            isCrossedOut = false;
-        }
-        public Task(string initial)
-        {
-            Description = initial;
-            isCrossedOut = false;
-        }
-        public void CrossOut()
-        {
-            isCrossedOut = true;
-        }
-        public Task ReEnter()
-        {
-            return new Task(Description);
-        }
-        public void Display()
-        {
-            if (isCrossedOut)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-            }
-            Console.WriteLine(Description);
-            Console.ResetColor();
-        }
-        public override string ToString()
-        {
-            return Description;
-        }
-        public void Deconstruct(out string Description)
-        {
-            Description = this.Description;
-        }
-    }
+    
     public class ConsoleHelper
     {
         public static int MultipleChoice(bool canCancel, params string[] options)
