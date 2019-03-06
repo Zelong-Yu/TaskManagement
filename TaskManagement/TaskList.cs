@@ -122,8 +122,8 @@ namespace TaskManagement
             // Create a string array with the lines of text
             string[] taskStringArray = Array.ConvertAll(taskList.ToArray(), x => x.ToString());
             // Set a variable to the Documents path.
-            string docPath =
-              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string docPath = "";
+            //  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             // Write the string array to a new file named "WriteLines.txt".
             using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Tasks.txt")))
@@ -136,11 +136,11 @@ namespace TaskManagement
         {
             List<string> fileLines = new List<string>();
             // Set a variable to the Documents path.
-            string docPath =
-              Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            string docPath = "";
+            //  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             try
             {
-                using (var r = new StreamReader(docPath + "\\Tasks.txt"))
+                using (var r = new StreamReader(docPath + "Tasks.txt"))
                 {
                     string line;
                     while ((line = r.ReadLine()) != null)

@@ -38,8 +38,10 @@ namespace TaskManagement
             do
             {
                 Console.Clear();
+                Console.WriteLine("Tasks on current page\n---------------------");
+                Console.ResetColor();
                 currentPage.Display();
-                Console.WriteLine("You have {0} pages of tasks.", noteBook.TotalPageNum());
+                Console.WriteLine("---------------------\nYou have {0} pages of tasks.", noteBook.TotalPageNum());
                 switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t" +
                     "4 Write to file (Warning: Task file will be overwritten)\n\t5 Read From file (Warning: Inputed tasks will be overwritten)\n\t" +
                     "6 Next Page\n\t7 Trim top completed tasks\n\t0 Quit\nChoice: ", 0, 8))
@@ -59,6 +61,7 @@ namespace TaskManagement
                         currentPage.DisplayWithIndex();
                         int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, currentPage.NumberTasks()-1);
                         taskList.Add(currentPage.ExtractDescription(taskIndex));
+                        currentPage.CrossOut(taskIndex);
                         noteBook = new NoteBook(taskList);
                         currentPage = noteBook.GetLastPage();
                         break;
