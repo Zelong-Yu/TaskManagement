@@ -36,7 +36,7 @@ namespace TaskManagement
             {
                 Console.Clear();
                 taskList.Display();
-                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t4 Write to file\n\t5 Read From file\n\t6 Split List0 Quit\nChoice: ", 0, 6))
+                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t4 Write to file\n\t5 Read From file\n\t6 Split List\n\t0 Quit\nChoice: ", 0, 6))
                 {
                     case 1:
                         taskList.Add(PromptForInput("Type new task and enter: "));

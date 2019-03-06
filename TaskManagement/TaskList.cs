@@ -8,18 +8,17 @@ namespace TaskManagement
 {
     class TaskList
     {
-        public int NumberOfTasks;
         private List<Task> taskList;
         // string path = @"C:\Users\yuzel\OneDrive\Documents\MSSA\ISTA220\TaskManagement\TaskList.txt";
         public TaskList()
         {
-            NumberOfTasks = 0;
+ 
             taskList = new List<Task>();
         }
         public TaskList(List<Task> readList)
         {
             taskList = readList;
-            NumberOfTasks = taskList.Count;
+ 
         }
         public TaskList SplitList(TaskList tl, int startIndex = 0, int count = 25)
         {
@@ -32,12 +31,12 @@ namespace TaskManagement
         public void Add(Task newTask)
         {
             taskList.Add(newTask);
-            NumberOfTasks++;
+
         }
         public void Add(string newTask)
         {
             taskList.Add(new Task(newTask));
-            NumberOfTasks++;
+ 
         }
         public void Display()
         {
