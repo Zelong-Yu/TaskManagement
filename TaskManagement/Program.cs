@@ -16,15 +16,15 @@ namespace TaskManagement
             var taskList = new TaskList();
             taskList.ReadFromFile();
             var noteBook = new NoteBook(taskList);
-            var currentPage = noteBook.GetFirstPage();
+            var currentPage = noteBook.GetFirstUncompletedPage();
             
             do
             {
                 Console.Clear();
-                Console.WriteLine("Tasks on current page\n---------------------");
+                Console.WriteLine("Simple Scanning: Tasks on current page\n---------------------");
                 Console.ResetColor();
                 currentPage.Display();
-                Console.WriteLine("---------------------\nYou have {0} pages of tasks.", noteBook.TotalPageNum());
+                Console.WriteLine("---------------------\nYou have {0} pages of tasks. Will display from first page containing uncrossed out task after each action.", noteBook.TotalPageNum());
                 switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t" +
                     "4 Write to file (Warning: Task file will be overwritten)\n\t5 Read From file (Warning: Inputed tasks will be overwritten)\n\t" +
                     "6 Next Page\n\t7 Trim top completed tasks\n\t0 Save and Quit\nChoice: ", 0, 8))
@@ -46,7 +46,7 @@ namespace TaskManagement
                         taskList.Add(currentPage.ExtractDescription(taskIndex));
                         currentPage.CrossOut(taskIndex);
                         noteBook = new NoteBook(taskList);
-                        currentPage = noteBook.GetLastPage();
+                        currentPage = noteBook.GetFirstUncompletedPage();
                         break;
                     case 3:
                         if (taskList.NumberTasks() == 0)
