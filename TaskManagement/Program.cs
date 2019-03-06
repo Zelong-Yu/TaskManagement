@@ -14,26 +14,9 @@ namespace TaskManagement
         {
             bool quit = false;
             var taskList = new TaskList();
-          //  var noteBook = new NoteBook();
-          //  var currentPage = new Page();
-            /*var input = Console.ReadLine();
-             var task1 = new Task(input);
-             task1.CrossOut();
-            var task2 = task1.ReEnter();
-             var input2 = Console.ReadLine();
-             var task3 = new Task(input2);
-
-             taskList.Add(task1);
-             taskList.Add(task2);
-             taskList.Add(task3);
-             taskList.CrossOut(1);
-             taskList.ReEnter(2);
-            Console.WriteLine(task1.ToString());
-            Console.WriteLine(taskList.taskList[0].ToString());
-            foreach (Task task in taskList.taskList)
-              { Console.WriteLine(task.ToString()); }*/
-                var noteBook = new NoteBook(taskList);
-                var currentPage = noteBook.GetFirstPage();
+            taskList.ReadFromFile();
+            var noteBook = new NoteBook(taskList);
+            var currentPage = noteBook.GetFirstPage();
             
             do
             {
@@ -44,7 +27,7 @@ namespace TaskManagement
                 Console.WriteLine("---------------------\nYou have {0} pages of tasks.", noteBook.TotalPageNum());
                 switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t" +
                     "4 Write to file (Warning: Task file will be overwritten)\n\t5 Read From file (Warning: Inputed tasks will be overwritten)\n\t" +
-                    "6 Next Page\n\t7 Trim top completed tasks\n\t0 Quit\nChoice: ", 0, 8))
+                    "6 Next Page\n\t7 Trim top completed tasks\n\t0 Save and Quit\nChoice: ", 0, 8))
                 {
                     case 1:
                         taskList.Add(PromptForInput("Type new task and enter: "));
@@ -108,6 +91,7 @@ namespace TaskManagement
                         break;
 
                     default:
+                        taskList.WriteToFile();
                         quit = true;
                         break;
                 }
