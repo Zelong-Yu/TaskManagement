@@ -20,9 +20,17 @@ namespace TaskManagement
             taskList = readList;
  
         }
-        public TaskList SplitList(TaskList tl, int startIndex = 0, int count = 25)
+        public TaskList SplitList(int startIndex = 0, int count = 25)
         {
-            return new TaskList(tl.taskList.GetRange(startIndex,count));
+            return new TaskList(taskList.GetRange(startIndex,count));
+        }
+        public int numPageNeeded(int numLinePerPage = 25)
+        {
+            return taskList.Count / numLinePerPage +1;
+        }
+        public int numTaskOnLastPage(int numLinePerPage = 25)
+        {
+            return taskList.Count % numLinePerPage;
         }
         public int NumberTasks()
         {
@@ -57,7 +65,14 @@ namespace TaskManagement
         }
         public void CrossOut(int n)
         {
-            taskList[n].CrossOut();
+            try
+            {
+                taskList[n].CrossOut();
+            }
+            catch (IndexOutOfRangeException ie)
+            {
+                Console.WriteLine("Invalid index. Task list may be empty");
+            }
         }
         public void ReEnter(int n)
         {
@@ -65,11 +80,42 @@ namespace TaskManagement
         }
         public void DoTask(int n, bool isReenter = true)
         {
-            this.CrossOut(n);
+            CrossOut(n);
             if (isReenter)
             {
-                this.ReEnter(n);
+                ReEnter(n);
             }
+        }
+        public string ExtractDescription(int n)
+        {
+            return taskList[n].ToString().Trim(('\u200c'));
+        }
+        public void RemoveAt(int n)
+        {
+            taskList.RemoveAt(n);
+        }
+        public void trimTaskList()
+        {
+            //Trims top completed tasks from the tasklist 
+            while (taskList[0].isCrossedOut == true)
+            {
+                taskList.RemoveAt(0);
+                trimTaskList();
+            }
+
+        }
+        public bool IsTaskListCompleted()
+        {
+            bool istaskListCompleted = true;
+            foreach (Task t in taskList)
+            {
+                if (!t.isCrossedOut)
+                {
+                    istaskListCompleted = false;
+                    break;
+                }
+            }
+            return istaskListCompleted;
         }
         public void WriteToFile()
         {
@@ -92,16 +138,22 @@ namespace TaskManagement
             // Set a variable to the Documents path.
             string docPath =
               Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            using (var r = new StreamReader(docPath + "\\Tasks.txt"))
+            try
             {
-                string line;
-                while ((line = r.ReadLine()) != null)
+                using (var r = new StreamReader(docPath + "\\Tasks.txt"))
                 {
-                    fileLines.Add(line);
+                    string line;
+                    while ((line = r.ReadLine()) != null)
+                    {
+                        fileLines.Add(line);
+                    }
                 }
+                taskList = fileLines.ConvertAll(new Converter<string, Task>(stringToTask));
             }
-            Console.WriteLine(fileLines[1]);
-            taskList = fileLines.ConvertAll(new Converter<string, Task>(stringToTask));
+            catch (Exception e)
+            {
+                Console.WriteLine("{0}: If files does not exist, choose 4 to create a file first.",e.GetType().Name);
+            }
         }
 
         private Task stringToTask(string input)

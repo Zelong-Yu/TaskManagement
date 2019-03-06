@@ -14,6 +14,8 @@ namespace TaskManagement
         {
             bool quit = false;
             var taskList = new TaskList();
+          //  var noteBook = new NoteBook();
+          //  var currentPage = new Page();
             /*var input = Console.ReadLine();
              var task1 = new Task(input);
              task1.CrossOut();
@@ -30,41 +32,86 @@ namespace TaskManagement
             Console.WriteLine(taskList.taskList[0].ToString());
             foreach (Task task in taskList.taskList)
               { Console.WriteLine(task.ToString()); }*/
-
+                var noteBook = new NoteBook(taskList);
+                var currentPage = noteBook.GetFirstPage();
             
             do
             {
                 Console.Clear();
-                taskList.Display();
-                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t4 Write to file\n\t5 Read From file\n\t6 Split List\n\t0 Quit\nChoice: ", 0, 6))
+                currentPage.Display();
+                Console.WriteLine("You have {0} pages of tasks.", noteBook.TotalPageNum());
+                switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t" +
+                    "4 Write to file (Warning: Task file will be overwritten)\n\t5 Read From file (Warning: Inputed tasks will be overwritten)\n\t" +
+                    "6 Next Page\n\t7 Trim top completed tasks\n\t0 Quit\nChoice: ", 0, 8))
                 {
                     case 1:
                         taskList.Add(PromptForInput("Type new task and enter: "));
+                        noteBook = new NoteBook(taskList);
+                        currentPage = noteBook.GetFirstUncompletedPage();
                         break;
                     case 2:
+                        if (taskList.NumberTasks() == 0)
+                        {
+                            Console.WriteLine("No Task Entered Yet.");
+                            Console.ReadKey();
+                            break;
+                        }
                         taskList.DisplayWithIndex();
-                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, taskList.NumberTasks());
+                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, taskList.NumberTasks()-1);
                         taskList.DoTask(taskIndex);
+                        noteBook = new NoteBook(taskList);
+                        currentPage = noteBook.GetFirstUncompletedPage();
                         break;
                     case 3:
-                        taskList.DisplayWithIndex();
-                        int taskIndex3 = AcceptValidInt("Select which task to Complete : ", 0, taskList.NumberTasks());
-                        taskList.DoTask(taskIndex3,false);
+                        if (taskList.NumberTasks() == 0)
+                        {
+                            Console.WriteLine("No Task Entered Yet.");
+                            Console.ReadKey();
+                            break;
+                        }
+                        currentPage.DisplayWithIndex();
+                        int taskIndex3 = AcceptValidInt("Select which task to Complete : ", 0, currentPage.NumberTasks()-1);
+                        currentPage.CrossOut(taskIndex3);
+                        noteBook = new NoteBook(taskList);
+                        currentPage = noteBook.GetFirstUncompletedPage();
                         break;
                     case 4:
+                        if (taskList.NumberTasks() == 0)
+                        {
+                            Console.WriteLine("No Task Entered Yet.");
+                            Console.ReadKey();
+                            break;
+                        }
                         taskList.WriteToFile();
                         break;
                     case 5:
                         taskList.ReadFromFile();
+                        if (taskList.NumberTasks() == 0)
+                        {
+                            Console.WriteLine("No Task Read From File");
+                            Console.ReadKey();
+                            break;
+                        }
+                        noteBook = new NoteBook(taskList);
+                        currentPage = noteBook.GetFirstUncompletedPage();
                         break;
                     case 6:
-                        taskList = taskList.SplitList(taskList,10);
+                        currentPage = noteBook.GetNextPage();
                         break;
+                    case 7:
+                        taskList.trimTaskList();
+                        noteBook = new NoteBook(taskList);
+                        currentPage = noteBook.GetFirstUncompletedPage();
+                        break;
+
                     default:
                         quit = true;
                         break;
                 }
-
+               
+                //Console.WriteLine(noteBook.TotalPageNum());
+               //currentPage = noteBook.GetNextPage();
+                //currentPage.DisplayWithIndex();
                 if (!quit)
                 {
                     

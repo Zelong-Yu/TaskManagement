@@ -9,7 +9,7 @@ namespace TaskManagement
     class Task
     {
         private string Description;
-        private bool isCrossedOut;
+        public bool isCrossedOut;
         private bool isDotted;
         public static int NumTasks = 0;
         public Task()

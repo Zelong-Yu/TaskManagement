@@ -12,10 +12,10 @@ namespace TaskManagement
         private int pageID;
         private int taskPerPage = 25;
         private TaskList taskOnPage;
-        public bool PageCompleted = false;
         public Page()
         {
             NumPages++;
+            taskOnPage = new TaskList();
         }
         public Page(TaskList taskList, int startIndex=0)
         {
@@ -24,12 +24,51 @@ namespace TaskManagement
             int numOfTaskLeft = totalTaskNum - (startIndex + taskPerPage);
             if (numOfTaskLeft > 0)
             {
-                taskOnPage = taskList.SplitList(taskList, startIndex, taskPerPage);
+                taskOnPage = taskList.SplitList(startIndex, taskPerPage);
             }
             else
             {
-                taskOnPage = taskList.SplitList(taskList, startIndex, totalTaskNum-startIndex);
+                taskOnPage = taskList.SplitList(startIndex, totalTaskNum-startIndex);
                 
+            }
+        }
+        public void Display()
+        {
+            taskOnPage.Display();
+        }
+        public void DisplayWithIndex()
+        {
+            taskOnPage.DisplayWithIndex();
+        }
+        public void CrossOut(int n)
+        {
+            taskOnPage.CrossOut(n);
+        }
+        public int NumberTasks()
+        {
+            return taskOnPage.NumberTasks();
+        }
+        public void RemoveAt(int n) //Does not work
+        {
+            taskOnPage.RemoveAt(n);
+        }
+        public bool IsPageCompleted()
+        {
+            return taskOnPage.IsTaskListCompleted();
+        }
+        public void readFromTaskList(TaskList taskList, int startIndex = 0)
+        {
+            NumPages++;
+            int totalTaskNum = taskList.NumberTasks();
+            int numOfTaskLeft = totalTaskNum - (startIndex + taskPerPage);
+            if (numOfTaskLeft > 0)
+            {
+                taskOnPage = taskList.SplitList(startIndex, taskPerPage);
+            }
+            else
+            {
+                taskOnPage = taskList.SplitList(startIndex, totalTaskNum - startIndex);
+
             }
         }
     }
