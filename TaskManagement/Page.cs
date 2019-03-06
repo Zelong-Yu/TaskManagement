@@ -44,6 +44,10 @@ namespace TaskManagement
         {
             taskOnPage.CrossOut(n);
         }
+        public string ExtractDescription(int n)
+        {
+            return taskOnPage.ExtractDescription(n);
+        }
         public int NumberTasks()
         {
             return taskOnPage.NumberTasks();

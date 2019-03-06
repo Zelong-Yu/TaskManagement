@@ -56,11 +56,11 @@ namespace TaskManagement
                             Console.ReadKey();
                             break;
                         }
-                        taskList.DisplayWithIndex();
-                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, taskList.NumberTasks()-1);
-                        taskList.DoTask(taskIndex);
+                        currentPage.DisplayWithIndex();
+                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, currentPage.NumberTasks()-1);
+                        taskList.Add(currentPage.ExtractDescription(taskIndex));
                         noteBook = new NoteBook(taskList);
-                        currentPage = noteBook.GetFirstUncompletedPage();
+                        currentPage = noteBook.GetLastPage();
                         break;
                     case 3:
                         if (taskList.NumberTasks() == 0)
