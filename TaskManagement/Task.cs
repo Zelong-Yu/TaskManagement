@@ -45,7 +45,7 @@ namespace TaskManagement
                 Console.ForegroundColor = ConsoleColor.DarkGray;
             }
             Console.WriteLine(Description);
-            Console.ResetColor();
+     1
         }
         public override string ToString()
         {
