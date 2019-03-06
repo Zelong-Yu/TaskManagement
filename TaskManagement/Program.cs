@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Utilities.ConsoleUI;
 
 namespace TaskManagement
 {
@@ -12,12 +11,13 @@ namespace TaskManagement
     {
         static void Main(string[] args)
         {
+            Console.SetWindowSize(Console.WindowWidth,Console.LargestWindowHeight);
             bool quit = false;
             var taskList = new TaskList();
             taskList.ReadFromFile();
             var noteBook = new NoteBook(taskList);
             var currentPage = noteBook.GetFirstUncompletedPage();
-            
+
             do
             {
                 Console.Clear();
@@ -30,7 +30,13 @@ namespace TaskManagement
                     "6 Next Page\n\t7 Trim top completed tasks\n\t0 Save and Quit\nChoice: ", 0, 8))
                 {
                     case 1:
-                        taskList.Add(PromptForInput("Type new task and enter: "));
+                        string input = PromptForInput("Type new task and enter (hit Enter to abort): ");
+                        if (input.Trim()=="")
+                        {
+                            break;
+                        }
+
+                        taskList.Add(input);
                         noteBook = new NoteBook(taskList);
                         currentPage = noteBook.GetFirstUncompletedPage();
                         break;
@@ -42,7 +48,8 @@ namespace TaskManagement
                             break;
                         }
                         currentPage.DisplayWithIndex();
-                        int taskIndex = AcceptValidInt("Select which task to Reenter : ", 0, currentPage.NumberTasks()-1);
+                        int taskIndex = AcceptValidInt("Select which task to Reenter (-1 to quit): ", -1, currentPage.NumberTasks()-1);
+                        if (taskIndex == -1) break; 
                         taskList.Add(currentPage.ExtractDescription(taskIndex));
                         currentPage.CrossOut(taskIndex);
                         noteBook = new NoteBook(taskList);
@@ -56,7 +63,8 @@ namespace TaskManagement
                             break;
                         }
                         currentPage.DisplayWithIndex();
-                        int taskIndex3 = AcceptValidInt("Select which task to Complete : ", 0, currentPage.NumberTasks()-1);
+                        int taskIndex3 = AcceptValidInt("Select which task to Complete (-1 to quit): ", -1, currentPage.NumberTasks()-1);
+                        if (taskIndex3 == -1) break;
                         currentPage.CrossOut(taskIndex3);
                         noteBook = new NoteBook(taskList);
                         currentPage = noteBook.GetFirstUncompletedPage();
