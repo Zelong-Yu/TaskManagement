@@ -14,9 +14,8 @@ namespace TaskManagement
             Console.SetWindowSize(Console.WindowWidth,Console.LargestWindowHeight);
             bool quit = false;
             var taskList = new TaskList();
-            taskList.ReadFromFile();
             var noteBook = new NoteBook(taskList);
-            var currentPage = noteBook.GetFirstUncompletedPage();
+            var currentPage = noteBook.GetFirstPage();
 
             do
             {
@@ -27,7 +26,7 @@ namespace TaskManagement
                 Console.WriteLine("---------------------\nYou have {0} pages of tasks. Will display from first page containing uncrossed out task after each action.", noteBook.TotalPageNum());
                 switch (AcceptValidInt("Choose an option:\n\t1 Input new tasks\n\t2 CrossOut and Reenter a task\n\t3 Complete a task\n\t" +
                     "4 Write to file (Warning: Task file will be overwritten)\n\t5 Read From file (Warning: Inputed tasks will be overwritten)\n\t" +
-                    "6 Next Page\n\t7 Trim top completed tasks\n\t0 Save and Quit\nChoice: ", 0, 8))
+                    "6 Next Page\n\t7 Trim top completed tasks\n\t0 Save and Quit\nChoice: ", 0, 7))
                 {
                     case 1:
                         string input = PromptForInput("Type new task and enter (hit Enter to abort): ");
@@ -104,9 +103,6 @@ namespace TaskManagement
                         break;
                 }
                
-                //Console.WriteLine(noteBook.TotalPageNum());
-               //currentPage = noteBook.GetNextPage();
-                //currentPage.DisplayWithIndex();
                 if (!quit)
                 {
                     
@@ -164,83 +160,4 @@ namespace TaskManagement
         }
     }
 
-
-
-
-    
-
-    
-    public class ConsoleHelper
-    {
-        public static int MultipleChoice(bool canCancel, params string[] options)
-        {
-            const int startX = 0;
-            const int startY = 0;
-            const int optionsPerLine = 1;
-            const int spacingPerLine = 14;
-
-            int currentSelection = 0;
-
-            ConsoleKey key;
-
-            Console.CursorVisible = false;
-
-            do
-            {
-                Console.Clear();
-
-                for (int i = 0; i < options.Length; i++)
-                {
-                    Console.SetCursorPosition(startX + (i % optionsPerLine) * spacingPerLine, startY + i / optionsPerLine);
-
-                    if (i == currentSelection)
-                        Console.ForegroundColor = ConsoleColor.Red;
-
-                    Console.Write(options[i]);
-
-                    Console.ResetColor();
-                }
-
-                key = Console.ReadKey(true).Key;
-
-                switch (key)
-                {
-                    case ConsoleKey.LeftArrow:
-                        {
-                            if (currentSelection % optionsPerLine > 0)
-                                currentSelection--;
-                            break;
-                        }
-                    case ConsoleKey.RightArrow:
-                        {
-                            if (currentSelection % optionsPerLine < optionsPerLine - 1)
-                                currentSelection++;
-                            break;
-                        }
-                    case ConsoleKey.UpArrow:
-                        {
-                            if (currentSelection >= optionsPerLine)
-                                currentSelection -= optionsPerLine;
-                            break;
-                        }
-                    case ConsoleKey.DownArrow:
-                        {
-                            if (currentSelection + optionsPerLine < options.Length)
-                                currentSelection += optionsPerLine;
-                            break;
-                        }
-                    case ConsoleKey.Escape:
-                        {
-                            if (canCancel)
-                                return -1;
-                            break;
-                        }
-                }
-            } while (key != ConsoleKey.Enter);
-
-            Console.CursorVisible = true;
-
-            return currentSelection;
-        }
-    }
 }

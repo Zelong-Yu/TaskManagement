@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManagement
 {
-    class NoteBook
+    public class NoteBook
     {
         private LinkedList<Page> pageList;
         private int taskPerPage = 25;

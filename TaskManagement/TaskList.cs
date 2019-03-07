@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TaskManagement
 {
-    class TaskList
+    public class TaskList
     {
         private List<Task> taskList;
         // string path = @"C:\Users\yuzel\OneDrive\Documents\MSSA\ISTA220\TaskManagement\TaskList.txt";
@@ -74,6 +74,18 @@ namespace TaskManagement
                 Console.WriteLine("Invalid index. Task list may be empty");
             }
         }
+
+        public void Dot(int n)
+        {
+            try
+            {
+                taskList[n].Dot();
+            }
+            catch (IndexOutOfRangeException ie)
+            {
+                Console.WriteLine("Invalid index. Task list may be empty");
+            }
+        }
         public void ReEnter(int n)
         {
             taskList.Add(taskList[n].ReEnter());
@@ -88,7 +100,8 @@ namespace TaskManagement
         }
         public string ExtractDescription(int n)
         {
-            return taskList[n].ToString().Trim(('\u200c'));
+            char[] charToTrim = { '\u200c', '\u00B7' };
+            return taskList[n].ToString().Trim(charToTrim);
         }
         public void RemoveAt(int n)
         {
@@ -117,7 +130,7 @@ namespace TaskManagement
             }
             return istaskListCompleted;
         }
-        public void WriteToFile()
+        public void WriteToFile(string fileName= "Tasks.txt")
         {
             // Create a string array with the lines of text
             string[] taskStringArray = Array.ConvertAll(taskList.ToArray(), x => x.ToString());
@@ -126,13 +139,13 @@ namespace TaskManagement
             //  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
             // Write the string array to a new file named "WriteLines.txt".
-            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, "Tasks.txt")))
+            using (StreamWriter outputFile = new StreamWriter(Path.Combine(docPath, fileName)))
             {
                 foreach (string line in taskStringArray)
                     outputFile.WriteLine(line);
             }
         }
-        public void ReadFromFile()
+        public void ReadFromFile(string fileName = "Tasks.txt")
         {
             List<string> fileLines = new List<string>();
             // Set a variable to the Documents path.
@@ -140,7 +153,7 @@ namespace TaskManagement
             //  Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             try
             {
-                using (var r = new StreamReader(docPath + "Tasks.txt"))
+                using (var r = new StreamReader(docPath + fileName))
                 {
                     string line;
                     while ((line = r.ReadLine()) != null)
@@ -158,9 +171,12 @@ namespace TaskManagement
 
         private Task stringToTask(string input)
         {
-            if (input.Contains('\u200c'))
-                return new Task(input.Trim('\u200c'), true);
-            else return new Task(input);
+            bool CrossedOut = false;
+            bool Dotted = false;
+            char[] charToTrim = { '\u200c', '\u00B7' };
+            if (input.Contains('\u200c')) CrossedOut = true;
+            if (input.Contains('\u00B7')) Dotted = true;
+            return new Task(input.Trim(charToTrim), CrossedOut, Dotted);
         }
     }
 }

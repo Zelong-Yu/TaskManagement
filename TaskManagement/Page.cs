@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManagement
 {
-    class Page
+    public class Page
     {
         public static int NumPages = 0;
         private int pageID;
@@ -43,6 +43,10 @@ namespace TaskManagement
         public void CrossOut(int n)
         {
             taskOnPage.CrossOut(n);
+        }
+        public void Dot(int n)
+        {
+            taskOnPage.Dot(n);
         }
         public string ExtractDescription(int n)
         {

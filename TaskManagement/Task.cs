@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TaskManagement
 {
-    class Task
+    public class Task
     {
         private string Description;
         public bool isCrossedOut;
@@ -44,8 +44,8 @@ namespace TaskManagement
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
             }
-            Console.WriteLine(Description);
-     1
+            Console.WriteLine(ToString().Trim('\u200c'));
+            Console.ResetColor();
         }
         public override string ToString()
         {
@@ -54,7 +54,12 @@ namespace TaskManagement
             {
                 flag += '\u200c';
             }
-            return Description+flag;
+            string dot = "";
+            if (isDotted)
+            {
+                dot += '\u00B7';
+            }
+            return dot+Description+flag;
         }
         public void Deconstruct(out string Description, out bool isCrossedOut, out bool isDotted)
         {
