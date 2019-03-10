@@ -11,11 +11,12 @@ namespace TaskManagement
         static void Main(string[] args)
         {
             Console.SetWindowSize(Console.WindowWidth, Console.LargestWindowHeight);
+            string fileName = "FVPList.txt";
             bool quit = false;
             var taskList = new TaskList();
+            taskList.ReadFromFile(fileName);
             var noteBook = new NoteBook(taskList);
-            var currentPage = noteBook.GetFirstPage();
-            string fileName = "FVPList.txt";
+            var currentPage = noteBook.GetFirstUncompletedPage();
 
             do
             {

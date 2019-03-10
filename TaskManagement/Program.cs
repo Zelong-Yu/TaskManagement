@@ -14,8 +14,9 @@ namespace TaskManagement
             Console.SetWindowSize(Console.WindowWidth,Console.LargestWindowHeight);
             bool quit = false;
             var taskList = new TaskList();
+            taskList.ReadFromFile();
             var noteBook = new NoteBook(taskList);
-            var currentPage = noteBook.GetFirstPage();
+            var currentPage = noteBook.GetFirstUncompletedPage();
 
             do
             {
