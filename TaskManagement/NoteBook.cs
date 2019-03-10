@@ -39,9 +39,20 @@ namespace TaskManagement
         public Page GetFirstUncompletedPage()
         {
             currentPageNode = pageList.First;
-            while (currentPageNode.Value.IsPageCompleted())
+            try
             {
-                currentPageNode = currentPageNode.Next;
+                while (currentPageNode.Value.IsPageCompleted())
+                {
+                    currentPageNode = currentPageNode.Next;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                currentPageNode = pageList.First;
+            }
+            finally
+            {
             }
             return currentPageNode.Value;
         }

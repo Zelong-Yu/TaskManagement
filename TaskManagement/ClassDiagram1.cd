@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TaskManagement.NoteBook">
+    <Position X="9.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIBAAAAAAgACCAAAACAAAACAAAAAAAAAQAAAAAQE=</HashCode>
+      <FileName>NoteBook.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskManagement.Page">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAgAAAAICAAAABQAACAAKAAAACAAQAAACAAE=</HashCode>
+      <FileName>Page.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskManagement.Task">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAgAAIEAIAAgRQACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Task.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskManagement.TaskList">
+    <Position X="1.75" Y="3" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAIBAAAAAAQAAQICAAAAAQAAKCIAAAAECAABAAgCCAA=</HashCode>
+      <FileName>TaskList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
