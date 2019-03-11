@@ -110,7 +110,7 @@ namespace TaskManagement
         public void trimTaskList()
         {
             //Trims top completed tasks from the tasklist 
-            while (taskList.Count>0 && taskList[0].isCrossedOut == true)
+            while (taskList.Any() && taskList[0].isCrossedOut == true)
             {
                 taskList.RemoveAt(0);
                 trimTaskList();
