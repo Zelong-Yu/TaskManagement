@@ -139,4 +139,23 @@ References
 
 * [**FVP** Original documentation by _Mark Foster_](http://markforster.squarespace.com/blog/2015/5/21/the-final-version-perfected-fvp.html)
 
+DevLog - Task Management/Time Usage
+----------
+25 minutes Pomodoro Technic Used. Github issue used.
 
+3/4 Planning/Start
+Estimate Time: 3 hours. Actual time: 5 hours.
+3/5 Basic UI
+Estimate Time: 4 hours Actual Time: 6 hours
+3/7 Pagination
+Estimate Time: 4 hours Actual Time: 4 hours
+3/8 Implement FVP
+Estimate Time: 3 hours Actual Time: 1.5 hours
+
+Conclusion: Write simple things that works and partialy realize the desired functions before swamped in Engineer's trap.
+
+DevLog - Next Step
+----------
+- Implement AF1-4
+- Make UI prettier
+- Implement page number (currently pages is stored in a linked list, making it hard to extract page index).
