@@ -145,10 +145,13 @@ DevLog - Task Management/Time Usage
 
 3/4 Planning/Start
 Estimate Time: 3 hours. Actual time: 5 hours.
+
 3/5 Basic UI
 Estimate Time: 4 hours Actual Time: 6 hours
+
 3/7 Pagination
 Estimate Time: 4 hours Actual Time: 4 hours
+
 3/8 Implement FVP
 Estimate Time: 3 hours Actual Time: 1.5 hours
 
