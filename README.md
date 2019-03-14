@@ -2,13 +2,19 @@ Simple Scanning and FVP Task Management Console App
 ===============================================
 ### Zelong Yu
 
-[Github folder](https://github.com/himoyu/TaskManagement)
+[Cosole App Github folder](https://github.com/himoyu/TaskManagement)
+
+[Web version of Simple Scanning App](https://github.com/himoyu/TaskManagementWeb)
 
 [**Simple Scanning** original documentation by _Mark Foster_](http://markforster.squarespace.com/blog/2017/12/2/simple-scanning-the-rules.html)
+![Alt text](SampleFiles/SimpleScanning.gif?raw=true "SimpleScanning")
 
-[*Web version of Simple Scanning*](https://github.com/himoyu/TaskManagementWeb)
+
+
+
 
 [**FVP** Original documentation by _Mark Foster_](http://markforster.squarespace.com/blog/2015/5/21/the-final-version-perfected-fvp.html)
+![Alt text](SampleFiles/FVP.gif?raw=true "FVP")
 
 Introduction
 ------------
